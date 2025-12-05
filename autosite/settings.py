@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-zmmm19af(g*9^qldhplb!gm#$7wd%en+1lax$#9z4vr^rk8qkm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["bxreis21.pythonanywhere.com"]
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -126,3 +126,16 @@ MEDIA_ROOT = Path.joinpath(BASE_DIR,'media')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
+
+# (Opcional) Mapear níveis para classes CSS
+MESSAGE_TAGS = {
+    messages.DEBUG: "debug",
+    messages.INFO: "info",
+    messages.SUCCESS: "success",
+    messages.WARNING: "warning",
+    messages.ERROR: "error",
+}

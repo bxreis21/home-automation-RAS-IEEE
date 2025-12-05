@@ -1,62 +1,356 @@
-{% load static %}
-{% load custom_tags %}
-
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'home.css' %}">
-    <script src="{% static 'home.js' %}"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Devices</title>
+    <style>  
+    .device-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; /* Espaço entre cards */
+    }
+
+    .device-card {
+        background: #fff;
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        width: 220px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* Caixa de status */
+    .status-box {
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 12px;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 15px;
+        color: rgb(0, 0, 0);
+        border: 3px solid #444;
+    }
+
+    .status-on {
+        border: 3px solid #007a00fa;
+        color: #007a00fa;
+        background: #ffffff;
+    }
+
+    .status-off {
+        background: #ffffff;
+    }
+
+    /* Botões */
+    .btn-toggle {
+        padding: 10px;
+        width: 100%;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+
+    .btn-on {
+        background: #4caf50;
+        color: white;
+    }
+
+    .btn-on:hover {
+        background: #3e8e41;
+    }
+
+    .btn-off {
+        background: #d9534f;
+        color: white;
+    }
+
+    .btn-off:hover {
+        background: #c0392b;
+    }
+        .device-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            width: 220px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .device-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .device-info {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 12px;
+        }
+
+        .btn-toggle {
+            padding: 10px;
+            width: 100%;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn-on {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-off {
+            background: #d9534f;
+            color: white;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .btn-create {
+            display: block;
+            width: 200px;
+            margin: 20px auto 30px;
+            padding: 12px;
+            text-align: center;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            background: #333;
+            color: white;
+            font-size: 15px;
+        }
+
+        .device {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .device-info {
+            flex: 1;
+        }
+        .device-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .device-type {
+            color: #555;
+            font-size: 14px;
+        }
+        input[type="range"] {
+            width: 160px;
+        }
+        .btn-toggle {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .on { background: #4caf50; color: white; }
+        .off { background: #d32f2f; color: white; }
+        .value-box {
+            font-size: 16px;
+            font-weight: bold;
+            padding: 6px 10px;
+            border-radius: 6px;
+            background: #eaeaea;
+        }
+
+        /* MODAIS */
+        .modal-bg {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.45);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal {
+            background: white;
+            padding: 25px;
+            width: 320px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .modal h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .modal input,
+        .modal select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        .modal button {
+            width: 100%;
+            padding: 12px;
+            background: #333;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+        }
+        .close-btn {
+            margin-top: 10px;
+            background: #777 !important;
+        }
+
+        /* Toggle dos modais */
+        #modal-toggle-device:checked ~ .modal-bg-device {
+            display: flex;
+        }
+        #modal-toggle-room:checked ~ .modal-bg-room {
+            display: flex;
+        }
     </style>
-
 </head>
+<body>
 
-<body id="fundo">
-    <nav>
-        <div class="ras_logo">
-            <a href="{% url 'home' %}"><img src="{% static 'RAS_logo.png' %}" alt="logo_RAS"></a>
-        </div>
-        <div class="nav_title">
-            <h1>Projeto Automação Residencial</h1>
-        </div>
-        {% if not request.user.is_authenticated %}
-        <div class="login_button">
-            <a href="{% url 'login' %}"><button>Login</button></a>
-        </div>
-        {% else %}
-        <div class="login_button">
-            <a href="{% url 'devices' %}"><button>Devices</button></a>
-        </div>
-        {% endif %}
-    </nav>
+    <div class="container">
 
-    <div class="info_cards">
-        <div class="info_box">
-            <h2>Sobre</h2>
-            <p>
-                O projeto tem o objetivo inicial de facilitar e tornar automáticas algumas tarefas habituais que em uma casa convencional ficaria a cargo de seus moradores.
-                Pretendemos expandir tais tecnologias e conceitos aplicados para projetos tais como carros inteligentes, manufatura, smarts grids, etc.
-                Com isso, temos o objetivo geral de controlar, monitorar e otimizar processos garantindo mais comodidade, economia e, consequentemente, qualidade de vida.
-            </p>
+        <!-- BOTÕES -->
+        <h1>Cômodos</h1>
+        <label for="modal-toggle-room" class="btn-create">+ Criar Cômodo</label>
+
+        <h1>Dispositivos</h1>
+        <label for="modal-toggle-device" class="btn-create">+ Criar Dispositivo</label>
+
+
+        <!-- CHECKBOXES DOS MODAIS -->
+        <input type="checkbox" id="modal-toggle-room" style="display:none;">
+        <input type="checkbox" id="modal-toggle-device" style="display:none;">
+
+
+        <!-- MODAL – CÔMODO -->
+        <div class="modal-bg modal-bg-room">
+            <div class="modal">
+                <h2>Novo Cômodo</h2>
+                <form method="POST" action="/rooms/create/">
+                    {% csrf_token %}
+                    <input type="text" name="name" placeholder="Nome do cômodo" required>
+                    <button type="submit">Criar</button>
+                </form>
+                <label for="modal-toggle-room" class="btn-create close-btn">Fechar</label>
+            </div>
         </div>
-        <div class="info_box">
-            <h2>Quem somos?</h2>
-            <p>
-                Voluntários do Ramo Estudantil IEEE UERJ, membros do capítulo RAS (Robotics and Automation Society).
-            </p>
+
+
+        <!-- MODAL – DISPOSITIVO -->
+        <div class="modal-bg modal-bg-device">
+            <div class="modal">
+                <h2>Novo Dispositivo</h2>
+                <form method="POST" action="/devices/create/">
+                    {% csrf_token %}
+
+                    <input type="number" name="device_id" placeholder="ID do componente" required>
+                    <input type="text" name="name" placeholder="Nome" required>
+
+                    <select name="device_type">
+                        <option value="0">Atuador</option>
+                        <option value="1">Sensor</option>
+                    </select>
+
+                    <select name="device_input">
+                        <option value="0">Analógico</option>
+                        <option value="1">Digital</option>
+                    </select>
+
+                    <select name="room" required>
+                        {% for room in rooms %}
+                            <option value="{{ room.id }}">{{ room.name }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <input type="number" name="porta" placeholder="Porta do ESP32" required>
+
+                    <button type="submit">Criar</button>
+                </form>
+
+                <label for="modal-toggle-device" class="btn-create close-btn">Fechar</label>
+            </div>
         </div>
-        <div class="logo_ras_ieee">
-            <img src="{% static 'Ramo_logo.png' %}" alt="">
-            <img src="{% static 'ras_logo_color.png' %}" alt="">
+
+
+        {% for room in rooms %}
+        <h2 class="text-xl font-bold mt-6">{{ room.name }}</h2>
+
+        <div class="room-section">
+            {% if room.device_set.all %}
+            <div class="device-grid">
+            {% for d in room.device_set.all %}
+                
+                <div class="device-card">
+                    <div class="device-title">{{ d.name }}</div>
+
+                    <!-- STATUS OU VALOR -->
+                    {% if d.device_type == 1 %}
+                        <!-- SENSOR -->
+                        {% if d.device_input %}
+                            <div class="status-box {% if d.digital_value %}status-on{% else %}status-off{% endif %}">
+                                {% if d.digital_value %}Ligado{% else %}Desligado{% endif %}
+                            </div>
+                        {% else %}
+                            <div class="status-box status-on">
+                                Medida: {{ d.analog_value }}
+                            </div>
+                        {% endif %}
+                    
+                    {% else %}
+                            <!-- DIGITAL ATUATOR -->
+                            <div class="status-box {% if d.digital_value %}status-on{% else %}status-off{% endif %}">
+                                {% if d.digital_value %}Ligado{% else %}Desligado{% endif %}
+                            </div>
+
+                            <form method="POST" action="{% url 'toggle_device' d.device_id %}">
+                                {% csrf_token %}
+                                <button 
+                                    type="submit"
+                                    class="btn-toggle {% if d.digital_value %}btn-off{% else %}btn-on{% endif %}">
+                                    {% if d.digital_value %}Desligar{% else %}Ligar{% endif %}
+                                </button>
+                    {% endif %}
+                </div>
+
+            {% endfor %}
+            </div>
+                        {% else %}
+                <p>Nenhum dispositivo aqui ainda.</p>
+            {% endif %}
         </div>
+    {% endfor %}
+
     </div>
-    
-    <footer>
-        <a href=""><img src="{% static 'linkedin.png' %}" alt=""></a>
-        <a href=""><img src="{% static 'instagram.png' %}" alt=""></a>
-        <a href=""><img src="{% static 'facebook.png' %}" alt=""></a>
-    </footer>
 </body>
+</html>

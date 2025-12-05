@@ -1,74 +1,60 @@
-{% load static %}
-{% load custom_tags %}
-
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'home.css' %}">
-    <link rel="stylesheet" href="{% static 'login.css' %}">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Register</title>
+<style>
+body {
+margin: 0;
+padding: 0;
+font-family: Arial, sans-serif;
+background: #f2f2f2;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+}
+.container {
+background: white;
+padding: 30px;
+width: 350px;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0,0,0,0.1);
+text-align: center;
+}
+h2 { margin-bottom: 20px; }
+input {
+width: 100%;
+padding: 12px;
+margin: 10px 0;
+border-radius: 5px;
+border: 1px solid #ccc;
+}
+button {
+width: 100%;
+padding: 12px;
+border: none;
+background: #333;
+color: white;
+border-radius: 5px;
+cursor: pointer;
+margin-top: 10px;
+}
+a { color: #333; font-size: 14px; display: block; margin-top: 10px; }
+</style>
 </head>
-
-
 <body>
-    <nav>
-        <div class="ras_logo">
-            <a href="{% url 'home' %}"><img src="{% static 'RAS_logo.png' %}" alt="logo_RAS"></a>
-        </div>
-        <div class="nav_title">
-            <h1>Projeto Automação Residencial</h1>
-        </div>
-        {% if not request.user.is_authenticated %}
-        <div class="login_button" >
-            <a href="{% url 'login' %}"><button>Login</button></a>
-        </div>
-        {% endif %}
-    </nav>
-
-    <div class="content">
-        <div class="card" id="register-card">
-            <form action="{% url 'register' %}" method="POST">
-                    {% csrf_token %}
-                <div class="login_label">
-                    <label>Nome</label>
-                </div>
-                <input type="text" name="name" id="register-input">
-                
-                <div class="login_label">
-                    <label>Sobrenome</label>
-                </div>
-                <input type="text" name="lastname" id="register-input">
-
-                <div class="login_label">
-                    <label>Usuário</label>
-                </div>
-                <input type="text" name="username" id="register-input">
-
-                <div class="login_label">
-                    <label>Email</label>
-                </div>
-                <input type="email" name="email" id="register-input">
-
-                <div class="login_label">
-                    <label>Senha</label>
-                </div>
-                <input type="password" name="password" id="register-input">
-
-                <div class="login_label">
-                    <label>Confirmação de senha</label>
-                </div>
-                <input type="password" name="password2" id="register-input">
-                <button type="submit">Criar conta</button>
-            </form>
-        </div>
-    </div>
-
-    <footer>
-        <a href=""><img src="{% static 'linkedin.png' %}" alt=""></a>
-        <a href=""><img src="{% static 'instagram.png' %}" alt=""></a>
-        <a href=""><img src="{% static 'facebook.png' %}" alt=""></a>
-    </footer>
+<div class="container">
+<h2>Register</h2>
+<form method="post">
+{% csrf_token %}
+<input type="text" name="username" placeholder="Username" required />
+<input type="email" name="email" placeholder="Email" required />
+<input type="password" name="password1" placeholder="Password" required />
+<input type="password" name="password2" placeholder="Confirm Password" required />
+<button type="submit">Registrar</button>
+</form>
+<a href="/login">Já tenho conta</a>
+</div>
 </body>
+</html>
