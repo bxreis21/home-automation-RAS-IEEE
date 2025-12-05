@@ -154,13 +154,15 @@ def read_device(request, device_id):
         return Response({
             "device_id": device.device_id,
             "type": "digital",
-            "value": device.digital_value
+            "value": device.digital_value,
+            "port": device.port
         })
     else:  # Analógico
         return Response({
             "device_id": device.device_id,
             "type": "analog",
-            "value": device.analog_value
+            "value": device.analog_value,
+            "port": device.port
         })
 
 
